@@ -26,14 +26,21 @@ npm install
 
 ### 3.  Set Up Environment Variables
 Create a .env file in the root of your project. Add the necessary environment variables
-#### DATABASE_URL=your_database_connection_url
+```
+DATABASE_URL=your_database_connection_url
+```
 
 ### 4. Run the Project in Development Mode
 Finally, you can run the project in development mode:
 ```bash
 npm run start:dev
 ```
+it will be accessible at http://localhost:3001.
 
+## Testing the Graphql Api 
+You can use desktop postman or the live postman to test your queries,
+here is the link to [**view the api**](https://documenter.getpostman.com/view/31453748/2sA35BbQ7i)
 
-
+## Conclusion 
+You have successfully setup the project
 
