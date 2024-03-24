@@ -23,10 +23,4 @@ export class AuthResolver {
     return this.authService.bioLogin(biometricInput);
   }
 
-  // @Query(() => [User], { name: 'user' })
-  // findAll() {
-  //   // return this.authService.login();
-  // }
-
- 
 }
