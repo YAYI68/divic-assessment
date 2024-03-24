@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin@123
+      POSTGRES_DB: db
+    container_name: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: divic
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./src:/usr/src/app/src
+  #     - ./prisma:/app/prisma
+  #   depends_on:
+  #     - postgres
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   restart: always
+  #   container_name: pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #     PGADMIN_DEFAULT_PASSWORD: pgadmin4
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - postgres
