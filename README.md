@@ -14,4 +14,26 @@ Before getting started, ensure you have the following installed on your system:
 ### 1. Clone the project from Github repository
 
 ```bash
-git clone 
+git clone https://github.com/YAYI68/divic-assessment.git
+
+```
+### 2. Install Dependencies
+Navigate into your project directory:
+
+```bash
+npm install
+```
+
+### 3.  Set Up Environment Variables
+Create a .env file in the root of your project. Add the necessary environment variables
+#### DATABASE_URL=your_database_connection_url
+
+### 4. Run the Project in Development Mode
+Finally, you can run the project in development mode:
+```bash
+npm run start:dev
+```
+
+
+
+
