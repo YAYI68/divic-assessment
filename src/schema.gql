@@ -14,25 +14,26 @@ input CreateUserInput {
 type Mutation {
   bioLogin(biometricInput: BiometricInput!): SignResponse!
   createUser(createUserInput: CreateUserInput!): User!
-  login(loginInput: SignUpInput!): SignResponse!
+  login(loginInput: SignInput!): SignResponse!
   removeUser(id: Int!): User!
-  signup(signUpInput: SignUpInput!): SignResponse!
+  signup(signInput: SignInput!): SignResponse!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  profile: User!
   user(id: Int!): User!
+}
+
+input SignInput {
+  email: String!
+  password: String!
 }
 
 type SignResponse {
   accessToken: String!
   refreshToken: String!
   user: User!
-}
-
-input SignUpInput {
-  email: String!
-  password: String!
 }
 
 input UpdateUserInput {

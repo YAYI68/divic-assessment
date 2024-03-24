@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces/jwt.interface';
 import { jwtConstants } from './contants/jwt-constant';
-import { BiometricInput, SignUpInput } from './dto/signup-inputs';
+import { BiometricInput, SignInput } from './dto/sign-inputs';
 
 @Injectable()
 export class AuthService {
@@ -44,18 +44,18 @@ export class AuthService {
     return isValid;
   }
 
-  async create(signUpInput: SignUpInput) {
+  async create(SignInput: SignInput) {
     const existUser = await this.prisma.user.findUnique({
-      where: { email: signUpInput.email },
+      where: { email: SignInput.email },
     });
     if (existUser) {
       throw new ConflictException('Email already exists');
     }
 
-    const hashpassword = await this.hashData(signUpInput.password);
+    const hashpassword = await this.hashData(SignInput.password);
     const user = await this.prisma.user.create({
       data: {
-        ...signUpInput,
+        ...SignInput,
         password: hashpassword,
       },
     });
@@ -66,7 +66,7 @@ export class AuthService {
     return { ...token,user:{id:user.id,email:user.email,biometricKey:user.biometricKey} };
   }
 
-  async login(loginInput: SignUpInput) {
+  async login(loginInput: SignInput) {
     try {
       const { email, password } = loginInput;
       const user = await this.prisma.user.findUnique({
@@ -115,12 +115,20 @@ export class AuthService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    try{
+       const user = this.prisma.user.findUnique({where:{
+        id:id
+       }})
+       if(!user){
+        throw new BadRequestException('User not found');
+       }
+       return user
+    }
+    catch(error){
+      if (error instanceof HttpException) {
+        throw new HttpException(error.message, error.getStatus());
+      }
+      throw error;
+    }  
   }
 }

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
-import { SignUpInput, BiometricInput } from './dto/signup-inputs';
+import { SignInput, BiometricInput } from './dto/sign-inputs';
 import { SignResponse } from './dto/sign-response';
 
 describe('AuthResolver', () => {
@@ -33,19 +33,19 @@ describe('AuthResolver', () => {
 
   describe('signup', () => {
     it('should call authService.create with correct arguments', async () => {
-      const signUpInput: SignUpInput = { email: 'test@example.com', password: 'password' };
+      const SignInput: SignInput = { email: 'test@example.com', password: 'password' };
       const signResponse: SignResponse = { accessToken: 'accessToken', refreshToken: 'refreshToken', user: {id:"1",email:"email",biometricKey:"biometricKey"} };
       (authService.create as jest.Mock).mockResolvedValueOnce(signResponse);
 
-      await resolver.signup(signUpInput);
+      await resolver.signup(SignInput);
 
-      expect(authService.create).toHaveBeenCalledWith(signUpInput);
+      expect(authService.create).toHaveBeenCalledWith(SignInput);
     });
   });
 
   describe('login', () => {
     it('should call authService.login with correct arguments', async () => {
-      const loginInput: SignUpInput = { email: 'test@example.com', password: 'password' };
+      const loginInput: SignInput = { email: 'test@example.com', password: 'password' };
       const signResponse: SignResponse = { accessToken: 'accessToken', refreshToken: 'refreshToken', user: {id:"1",email:"email",biometricKey:"biometricKey"} };
       (authService.login as jest.Mock).mockResolvedValueOnce(signResponse);
 

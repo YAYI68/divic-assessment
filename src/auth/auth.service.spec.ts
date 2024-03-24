@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { JwtPayload } from './interfaces/jwt.interface';
-import { SignUpInput, BiometricInput } from './dto/signup-inputs';
+import { SignInput, BiometricInput } from './dto/sign-inputs';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -41,11 +41,11 @@ describe('AuthService', () => {
 
   describe('create', () => {
     it('should create a new user', async () => {
-      const signUpInput: SignUpInput = {
+      const SignInput: SignInput = {
         email: 'test@example.com',
         password: 'password',
       };
-      const mockUser = { id: 1, email: signUpInput.email, password: 'hashedPassword', biometricKey: 'biometricKey' };
+      const mockUser = { id: 1, email: SignInput.email, password: 'hashedPassword', biometricKey: 'biometricKey' };
       const mockJwtPayload: JwtPayload = { userId: mockUser.id };
       const mockTokens = { accessToken: 'accessToken', refreshToken: 'refreshToken' };
 
@@ -54,26 +54,26 @@ describe('AuthService', () => {
       prismaServiceMock.user.create = jest.fn().mockResolvedValueOnce(mockUser);
       jwtServiceMock.signAsync = jest.fn().mockResolvedValueOnce(mockTokens.accessToken).mockResolvedValueOnce(mockTokens.refreshToken);
 
-      const result = await authService.create(signUpInput);
+      const result = await authService.create(SignInput);
 
       expect(result).toEqual({ ...mockTokens, user: { id: mockUser.id, email: mockUser.email, biometricKey: mockUser.biometricKey } });
     });
 
     it('should throw ConflictException if user already exists', async () => {
-      const signUpInput: SignUpInput = {
+      const SignInput: SignInput = {
         email: 'test@example.com',
         password: 'password',
       };
 
-      prismaServiceMock.user.findUnique = jest.fn().mockResolvedValueOnce({ email: signUpInput.email });
+      prismaServiceMock.user.findUnique = jest.fn().mockResolvedValueOnce({ email: SignInput.email });
 
-      await expect(authService.create(signUpInput)).rejects.toThrow(ConflictException);
+      await expect(authService.create(SignInput)).rejects.toThrow(ConflictException);
     });
   });
 
   describe('login', () => {
     it('should log in user with valid credentials', async () => {
-      const loginInput: SignUpInput = {
+      const loginInput: SignInput = {
         email: 'test@example.com',
         password: 'password',
       };
@@ -91,7 +91,7 @@ describe('AuthService', () => {
     });
 
     it('should throw BadRequestException if invalid credentials', async () => {
-      const loginInput: SignUpInput = {
+      const loginInput: SignInput = {
         email: 'test@example.com',
         password: 'password',
       };

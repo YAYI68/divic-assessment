@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 
 @InputType()
-export class SignUpInput {
+export class SignInput {
   @IsNotEmpty() 
   @IsString()
   @Field()
