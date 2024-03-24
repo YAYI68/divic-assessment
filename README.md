@@ -27,7 +27,9 @@ npm install
 ### 3.  Set Up Environment Variables
 Create a .env file in the root of your project. Add the necessary environment variables
 ```
-DATABASE_URL=your_database_connection_url
+DATABASE_URL=your postgress database connection url
+JWTSECRET=your secret text
+REFRESH_SECRET=your refresh secret text
 ```
 
 ### 4. Run the Project in Development Mode
